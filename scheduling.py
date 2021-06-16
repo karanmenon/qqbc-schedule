@@ -14,19 +14,19 @@ class Student:
         self.preference=preference
         self.classes=[]
 class ClassSections:
-    def __init__(self, name, teacher, enrollment, max_priority):
+    def __init__(self, name, teacher, enrollment):
         self.name=name
         self.teacher=teacher
         self.enrollment=enrollment
-        self.max_priority=max_priority
+        self.max_priority=0
         self.capacity=10
-classEnrollment=[[ClassSections(),ClassSections(),ClassSections(),ClassSections()], 
-[ClassSections(),ClassSections(),ClassSections(),ClassSections()], 
-[ClassSections(),ClassSections(),ClassSections(),ClassSections()], 
-[ClassSections(),ClassSections(),ClassSections(),ClassSections()], 
-[ClassSections(),ClassSections(),ClassSections(),ClassSections()], 
-[ClassSections(),ClassSections(),ClassSections(),ClassSections()], 
-[ClassSections(),ClassSections(),ClassSections(),ClassSections()]]
+classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", [])], 
+[ClassSections("Strategy", "Andy", []),ClassSections("US History", "Andy", []),ClassSections("Prose", "Andy", []),ClassSections("US History", "Andy", [])], 
+[ClassSections("How to QB", "Jason", []),ClassSections("Poetry", "Jason", []),ClassSections("Visual Art", "Jason", []),ClassSections("Drama", "Jason", [])], 
+[ClassSections("How to QB", "Jennifer", []),ClassSections("Biology", "Jennifer", []),ClassSections("Chemistry", "Jennifer", []),ClassSections("Biology", "Jennifer", [])], 
+[ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion", "Kritika", []),ClassSections("World History", "Kritika", []),ClassSections("World History", "Kritika", [])], 
+[ClassSections("Strategy", "Vedul"),ClassSections("Biology", "Vedul"),ClassSections("Myth and Religion", "Vedul"),ClassSections("Music", "Vedul")], 
+[ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
 
 scope=['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']        
 credentials= ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -72,6 +72,7 @@ strategy=[]
 howToQB=[]
 session1Students=[]
 session2Students=[]
+
 for ind in campers_data.index:
     preference_list=[]
     preference_list.append(campers_data['Class preference: [1]'][ind])
@@ -81,9 +82,17 @@ for ind in campers_data.index:
     preference_list.append(campers_data['Class preference: [5]'][ind])
 
     s=Student(campers_data['Name'][ind], campers_data['Session 1 or 2'][ind], campers_data['QB Exp.'][ind], preference_list)
-    students.append(s)
-classEnrollment={}
-studentSchedule={}
+
+    if(s.qb_exp=="none"):
+        howToQB.append(s)
+    else:
+        strategy.append(s)
+    
+    if(s.session==1):
+        session1Students.append(s)
+    else:
+        session2Students.append(s)
+
 
 service=discovery.build('sheets', 'v4', credentials=credentials)
 spreadsheet_id="1Ev3R1HH_eNRTxhoy8a5dxAG0Bkk85-Ef1kpUK63UVUs"
