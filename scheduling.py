@@ -24,7 +24,17 @@ session1Classes=["Myth and Religion", "Prose", "US History", "Chemistry", "Geogr
 session2Classes= ["Prose II", "Politics", "Myth and Religion II", "Biology II", "Poetry II", "Military History",
     "Philosophy and Society", "Chemistry II", "Authors", "Monarchy", "Geography II", "Earth and Space", "Music II"]
 
-students={}
+classPeriods={
+    "Myth and Religion": 1
+    "Prose": 
+}
+
+
+students=[]
+howToQb=[]
+strategy=[]
+
+
 for ind in campers_data.index:
     preference_list=[]
     preference_list.append(campers_data['Class preference: [1]'][ind])
@@ -35,6 +45,10 @@ for ind in campers_data.index:
 
     s=Student(campers_data['Name'][ind], campers_data['Session 1 or 2'][ind], campers_data['QB Exp.'][ind], preference_list)
     students.append(s)
+    if(s.qb_exp=="none"):
+        howToQb.append(s)
+    else:
+        strategy.append(s)
 classEnrollment={}
 studentSchedule={}
 
