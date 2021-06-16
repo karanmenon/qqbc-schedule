@@ -54,8 +54,9 @@ def getClassList(className):
     print(x)
 
 classPeriods={
-    "Myth and Religion": 1
-    "Prose": 
+    "Myth and Religion": [2,3],
+    "Prose":[2],
+    "Biology II":[ 2]
 }
 
 
