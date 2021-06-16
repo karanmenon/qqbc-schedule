@@ -23,6 +23,35 @@ session1Classes=["Myth and Religion", "Prose", "US History", "Chemistry", "Geogr
     "Biology", "Visual Art", "Drama", "World History", "Physics", "Music"]
 session2Classes= ["Prose II", "Politics", "Myth and Religion II", "Biology II", "Poetry II", "Military History",
     "Philosophy and Society", "Chemistry II", "Authors", "Monarchy", "Geography II", "Earth and Space", "Music II"]
+mythReligion=[]
+prose=[]
+usHistory=[]
+chemistry=[]
+geography=[]
+poetry=[]
+euroHist=[]
+biology=[]
+visualArt=[]
+drama=[]
+worldHist=[]
+physics=[]
+music=[]
+prose2=[]
+politics=[]
+mythReligion2=[]
+biology2=[]
+militaryHist=[]
+philSociety=[]
+chemistry2=[]
+authors=[]
+monarchy=[]
+geography2=[]
+earthSpace=[]
+music2=[]
+
+def getClassList(className):
+    
+    print(x)
 
 classPeriods={
     "Myth and Religion": 1
