@@ -7,11 +7,14 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 session_num=1
 class Student:
-    def __init__(self, name, session, qb_exp, preference):
+    def __init__(self, name, session, qb_exp, period2, period3, period4):
         self.name=name
         self.session=session
         self.qb_exp=qb_exp
-        self.preference=preference
+        self.period2=period2
+        self.period3=period3
+        self.period4=period4
+        #self.preference=preference
         self.classes=[]
 class ClassSections:
     def __init__(self, name, teacher, enrollment):
@@ -73,13 +76,29 @@ howToQB=[]
 session1Students=[]
 session2Students=[]
 
+p2=[]
+p3=[]
+p4=[]
+
 for ind in campers_data.index:
+    for i in range(1, 6):
+        input='Class preference: ['+i+']'
+        prefClass=campers_data[input][ind]
+        for j in classPeriods[prefClass]:
+            if(j==2):
+                p2.append({prefClass, i})
+            else if(j==3):
+                p3.append({prefClass, i})
+            else if(j==4):
+                p4.append({prefClass,i})
+
     preference_list=[]
     preference_list.append(campers_data['Class preference: [1]'][ind])
     preference_list.append(campers_data['Class preference: [2]'][ind])
     preference_list.append(campers_data['Class preference: [3]'][ind])
     preference_list.append(campers_data['Class preference: [4]'][ind])
     preference_list.append(campers_data['Class preference: [5]'][ind])
+
 
     s=Student(campers_data['Name'][ind], campers_data['Session 1 or 2'][ind], campers_data['QB Exp.'][ind], preference_list)
 
