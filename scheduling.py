@@ -53,18 +53,7 @@ def getClassList(className):
     
     print(x)
 
-classPeriods={
-    "Myth and Religion": [2,3],
-    "Prose":[2],
-    "Biology II":[ 2]
-}
-
-
-students=[]
-howToQb=[]
-strategy=[]
-
-
+students={}
 for ind in campers_data.index:
     preference_list=[]
     preference_list.append(campers_data['Class preference: [1]'][ind])
@@ -75,10 +64,6 @@ for ind in campers_data.index:
 
     s=Student(campers_data['Name'][ind], campers_data['Session 1 or 2'][ind], campers_data['QB Exp.'][ind], preference_list)
     students.append(s)
-    if(s.qb_exp=="none"):
-        howToQb.append(s)
-    else:
-        strategy.append(s)
 classEnrollment={}
 studentSchedule={}
 
@@ -87,6 +72,32 @@ spreadsheet_id="1Ev3R1HH_eNRTxhoy8a5dxAG0Bkk85-Ef1kpUK63UVUs"
 campers_sheet_id=2008186473
 instructors_sheet_id=1244594342
 #for str in session1Classes:
-
+classPeriods={
+    "Geography": [2,3,4],
+    "Prose": [2],
+    "World History": [2,3,4],
+    "US History": [2,4],
+    "European History": [2,4],
+    "Myth and Religion": [2,3],
+    "Chemistry": [3], 
+    "Poetry": [3],
+    "Biology": [2], 
+    "Visual Art": [3], 
+    "Drama": [4], 
+    "Music": [4],
+    "Prose II":[2],
+    "Politics":[3],
+    "Myth and Religion II":[2,3],
+    "Biology II":[2],
+    "Poetry II":[3],
+    "Military History":[2],
+    "Philosophy and Society":[3],
+    "Chemistry II":[3],
+    "Authors":[4],
+    "Monarchy":[3],
+    "Geography II":[2,4],
+    "Earth and Space":[4],
+    "Music II": [4],
+}
 #for str in session2Classes:
 
