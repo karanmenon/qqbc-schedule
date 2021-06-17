@@ -128,7 +128,27 @@ for i in range(1, 5):
                 strat.enrollment.append(s)
                 s.classes.append(strat)                
         else:
-            s.
+            if(i==2):
+                for j in s.period2:
+                    if len(j.keys()[0].enrollment)<10:
+                        j.keys()[0].enrollment.append(s)
+                        s.classes.append(j.keys()[0])
+                        if(j.values()[0]>j.keys()[0].max_priority):
+                            j.keys()[0].max_priority=j.values()[0]
+                        break
+                    else:
+                        if(j.values()<j.keys()[0].max_priority):
+                            for k in j.keys[0].enrollment: #looping thorugh students to find one to remove
+                                for x in k.period2:
+                                    if x.keys()[0]==j.keys()[0]:
+                                        if(x.values()[0]==j.keys()[0].max_priority):
+                                            
+
+
+            elif (i==3):
+                for j in s.period3:
+            else:
+                for j in s.period4:
 
 
 #for str in session1Classes:
