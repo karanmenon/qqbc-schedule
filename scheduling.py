@@ -3,6 +3,7 @@ from googleapiclient import discovery
 import numpy as np
 import gspread
 import pandas as pd
+import random
 from oauth2client.service_account import ServiceAccountCredentials
 
 session_num=1
@@ -31,12 +32,20 @@ classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geograph
 [ClassSections("Strategy", "Vedul"),ClassSections("Biology", "Vedul"),ClassSections("Myth and Religion", "Vedul"),ClassSections("Music", "Vedul")], 
 [ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
 
+strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0], classEnrollment[6][0]]
+howToQB=[classEnrollment[2][0], classEnrollment[3][0]]
+
 scope=['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']        
 credentials= ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
 client=gspread.authorize(credentials)
 sheet=client.open('https://docs.google.com/spreadsheets/d/1Ev3R1HH_eNRTxhoy8a5dxAG0Bkk85-Ef1kpUK63UVUs/edit?usp=sharing')
 campers_data=pd.DataFrame.from_dict(sheet.get_worksheet(1).get_all_records())
 instructors_data=pd.DataFrame.from_dict(sheet.get_worksheet(2).get_all_records())
+
+service=discovery.build('sheets', 'v4', credentials=credentials)
+spreadsheet_id="1Ev3R1HH_eNRTxhoy8a5dxAG0Bkk85-Ef1kpUK63UVUs"
+campers_sheet_id=2008186473
+instructors_sheet_id=1244594342
 
 session1Classes=["Myth and Religion", "Prose", "US History", "Chemistry", "Geography", "Poetry", "European History",
     "Biology", "Visual Art", "Drama", "World History", "Physics", "Music"]
@@ -71,41 +80,35 @@ classPeriods={
     "Music II": [4],
 }
 
-strategy=[]
-howToQB=[]
+
 session1Students=[]
 session2Students=[]
 
-p2=[]
-p3=[]
-p4=[]
+
+def myFunc(e):
+    return e.values()[0]
 
 for ind in campers_data.index:
+    p2=[]
+    p3=[]
+    p4=[]
+
     for i in range(1, 6):
         input='Class preference: ['+i+']'
         prefClass=campers_data[input][ind]
         for j in classPeriods[prefClass]:
             if(j==2):
                 p2.append({prefClass, i})
-            else if(j==3):
+            elif(j==3):
                 p3.append({prefClass, i})
-            else if(j==4):
+            elif(j==4):
                 p4.append({prefClass,i})
 
-    preference_list=[]
-    preference_list.append(campers_data['Class preference: [1]'][ind])
-    preference_list.append(campers_data['Class preference: [2]'][ind])
-    preference_list.append(campers_data['Class preference: [3]'][ind])
-    preference_list.append(campers_data['Class preference: [4]'][ind])
-    preference_list.append(campers_data['Class preference: [5]'][ind])
+    p2.sort(key=myFunc)
+    p3.sort(key=myFunc)
+    p4.sort(key=myFunc)
+    s=Student(campers_data['Name'][ind], campers_data['Session 1 or 2'][ind], campers_data['QB Exp.'][ind], p2, p3, p4)
 
-
-    s=Student(campers_data['Name'][ind], campers_data['Session 1 or 2'][ind], campers_data['QB Exp.'][ind], preference_list)
-
-    if(s.qb_exp=="none"):
-        howToQB.append(s)
-    else:
-        strategy.append(s)
     
     if(s.session==1):
         session1Students.append(s)
@@ -113,10 +116,21 @@ for ind in campers_data.index:
         session2Students.append(s)
 
 
-service=discovery.build('sheets', 'v4', credentials=credentials)
-spreadsheet_id="1Ev3R1HH_eNRTxhoy8a5dxAG0Bkk85-Ef1kpUK63UVUs"
-campers_sheet_id=2008186473
-instructors_sheet_id=1244594342
+for i in range(1, 5):
+    for s in session1Students:
+        if(i==1):
+            if(s.qb_exp=="None"):
+                how=howToQB[randrange(len(howToQB))]
+                how.enrollment.append(s)
+                s.classes.append(how)
+            else:
+                strat=strategy[randrange(len(strategy))]
+                strat.enrollment.append(s)
+                s.classes.append(strat)                
+        else:
+            s.
+
+
 #for str in session1Classes:
 
 #for str in session2Classes:
