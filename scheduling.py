@@ -4,6 +4,7 @@ import numpy as np
 import gspread
 import pandas as pd
 import random
+import copy
 from oauth2client.service_account import ServiceAccountCredentials
 
 session_num=1
@@ -23,6 +24,8 @@ class ClassSections:
         self.teacher=teacher
         self.enrollment=enrollment
         self.max_priority=0
+        self.highest=[]
+        self.priorities=[]
         self.capacity=10
 classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", [])], 
 [ClassSections("Strategy", "Andy", []),ClassSections("US History", "Andy", []),ClassSections("Prose", "Andy", []),ClassSections("US History", "Andy", [])], 
@@ -34,6 +37,7 @@ classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geograph
 
 strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0], classEnrollment[6][0]]
 howToQB=[classEnrollment[2][0], classEnrollment[3][0]]
+
 
 scope=['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']        
 credentials= ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -117,7 +121,8 @@ for ind in campers_data.index:
 
 
 for i in range(1, 5):
-    for s in session1Students:
+    sesh1=session1Students.copy()
+    for s in sesh1:
         if(i==1):
             if(s.qb_exp=="None"):
                 how=howToQB[randrange(len(howToQB))]
@@ -129,12 +134,15 @@ for i in range(1, 5):
                 s.classes.append(strat)                
         else:
             if(i==2):
-                for j in s.period2:
+                for j in s.period2: #looping through classes in period by priority
                     if len(j.keys()[0].enrollment)<10:
                         j.keys()[0].enrollment.append(s)
                         s.classes.append(j.keys()[0])
                         if(j.values()[0]>j.keys()[0].max_priority):
                             j.keys()[0].max_priority=j.values()[0]
+                            j.keys()[0].highest.insert(0, s)
+                            j.keys()[0].priorities.insert(0, j.values()[0])
+                        sesh1=[stu for stu in sesh1 if stu!=s]
                         break
                     else:
                         if(j.values()<j.keys()[0].max_priority):
@@ -142,16 +150,109 @@ for i in range(1, 5):
                                 for x in k.period2:
                                     if x.keys()[0]==j.keys()[0]:
                                         if(x.values()[0]==j.keys()[0].max_priority):
-                                            
-
-
+                                            x.classes.remove(j)
+                                            j.keys()[0].enrollment.remove({x, j.keys()[0].max_priority})
+                                            s.classes.append(j.keys()[0])
+                                            j.keys()[0].enrollment.append()
+                                            j.keys()[0].highest.pop(0)
+                                            j.keys()[0].priorities.pop(0)
+                                            if(j.values()[0]>j.keys()[0].max_priority):
+                                                j.keys()[0].max_priority=j.values()[0]
+                                                j.keys()[0].highest.insert(0, s)
+                                                j.keys()[0].priorities.insert(0, j.values()[0])
+                                            j.keys()[0].max_priority=j.keys()[0].priorities[0]
+                                            sesh1.append(x)
+                                            break
+                if(len(s.classes)<2): #if they are not able to get any of their top 5 within a certain timeslot
+                    min_enrollment=11
+                    min_row=0
+                    for y in range(0, 7):
+                        if(len(classEnrollment[y][1].enrollment)<min_enrollment):
+                            min_enrollment=len(classEnrollment[y][1].enrollment)
+                            min_row=y
+                    classEnrollment[min_row][1].enrollment.append(s)
+                    s.classes.append(classEnrollment[min_row][1])
             elif (i==3):
-                for j in s.period3:
+                for j in s.period3: #looping through classes in period by priority
+                    if len(j.keys()[0].enrollment)<10:
+                        j.keys()[0].enrollment.append(s)
+                        s.classes.append(j.keys()[0])
+                        if(j.values()[0]>j.keys()[0].max_priority):
+                            j.keys()[0].max_priority=j.values()[0]
+                            j.keys()[0].highest.insert(0, s)
+                            j.keys()[0].priorities.insert(0, j.values()[0])
+                        sesh1=[stu for stu in sesh1 if stu!=s]
+                        break
+                    else:
+                        if(j.values()<j.keys()[0].max_priority):
+                            for k in j.keys[0].enrollment: #looping thorugh students to find one to remove
+                                for x in k.period3:
+                                    if x.keys()[0]==j.keys()[0]:
+                                        if(x.values()[0]==j.keys()[0].max_priority):
+                                            x.classes.remove(j)
+                                            j.keys()[0].enrollment.remove({x, j.keys()[0].max_priority})
+                                            s.classes.append(j.keys()[0])
+                                            j.keys()[0].enrollment.append()
+                                            j.keys()[0].highest.pop(0)
+                                            j.keys()[0].priorities.pop(0)
+                                            if(j.values()[0]>j.keys()[0].max_priority):
+                                                j.keys()[0].max_priority=j.values()[0]
+                                                j.keys()[0].highest.insert(0, s)
+                                                j.keys()[0].priorities.insert(0, j.values()[0])
+                                            j.keys()[0].max_priority=j.keys()[0].priorities[0]
+                                            sesh1.append(x)
+                                            break
+                if(len(s.classes)<3): #if they are not able to get any of their top 5 within a certain timeslot
+                    min_enrollment=11
+                    min_row=0
+                    for y in range(0, 7):
+                        if(len(classEnrollment[y][2].enrollment)<min_enrollment):
+                            min_enrollment=len(classEnrollment[y][2].enrollment)
+                            min_row=y
+                    classEnrollment[min_row][2].enrollment.append(s)
+                    s.classes.append(classEnrollment[min_row][2])
             else:
-                for j in s.period4:
-
+                for j in s.period4: #looping through classes in period by priority
+                    if len(j.keys()[0].enrollment)<10:
+                        j.keys()[0].enrollment.append(s)
+                        s.classes.append(j.keys()[0])
+                        if(j.values()[0]>j.keys()[0].max_priority):
+                            j.keys()[0].max_priority=j.values()[0]
+                            j.keys()[0].highest.insert(0, s)
+                            j.keys()[0].priorities.insert(0, j.values()[0])
+                        sesh1=[stu for stu in sesh1 if stu!=s]
+                        break
+                    else:
+                        if(j.values()<j.keys()[0].max_priority):
+                            for k in j.keys[0].enrollment: #looping thorugh students to find one to remove
+                                for x in k.period4:
+                                    if x.keys()[0]==j.keys()[0]:
+                                        if(x.values()[0]==j.keys()[0].max_priority):
+                                            x.classes.remove(j)
+                                            j.keys()[0].enrollment.remove({x, j.keys()[0].max_priority})
+                                            s.classes.append(j.keys()[0])
+                                            j.keys()[0].enrollment.append()
+                                            j.keys()[0].highest.pop(0)
+                                            j.keys()[0].priorities.pop(0)
+                                            if(j.values()[0]>j.keys()[0].max_priority):
+                                                j.keys()[0].max_priority=j.values()[0]
+                                                j.keys()[0].highest.insert(0, s)
+                                                j.keys()[0].priorities.insert(0, j.values()[0])
+                                            j.keys()[0].max_priority=j.keys()[0].priorities[0]
+                                            sesh1.append(x)
+                                            break
+                if(len(s.classes)<4): #if they are not able to get any of their top 5 within a certain timeslot
+                    min_enrollment=11
+                    min_row=0
+                    for y in range(0, 7):
+                        if(len(classEnrollment[y][3].enrollment)<min_enrollment):
+                            min_enrollment=len(classEnrollment[y][3].enrollment)
+                            min_row=y
+                    classEnrollment[min_row][3].enrollment.append(s)
+                    s.classes.append(classEnrollment[min_row][3])
 
 #for str in session1Classes:
 
 #for str in session2Classes:
+
 
