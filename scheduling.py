@@ -32,7 +32,7 @@ classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geograph
 [ClassSections("How to QB", "Jason", []),ClassSections("Poetry", "Jason", []),ClassSections("Visual Art", "Jason", []),ClassSections("Drama", "Jason", [])], 
 [ClassSections("How to QB", "Jennifer", []),ClassSections("Biology", "Jennifer", []),ClassSections("Chemistry", "Jennifer", []),ClassSections("Biology", "Jennifer", [])], 
 [ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion", "Kritika", []),ClassSections("World History", "Kritika", []),ClassSections("World History", "Kritika", [])], 
-[ClassSections("Strategy", "Vedul"),ClassSections("Biology", "Vedul"),ClassSections("Myth and Religion", "Vedul"),ClassSections("Music", "Vedul")], 
+[ClassSections("Strategy", "Vedul", []),ClassSections("Biology", "Vedul", []),ClassSections("Myth and Religion", "Vedul", []),ClassSections("Music", "Vedul", [])], 
 [ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
 
 strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0], classEnrollment[6][0]]
@@ -135,6 +135,9 @@ for i in range(1, 5):
         else:
             if(i==2):
                 for j in s.period2: #looping through classes in period by priority
+                    for clas in s.classes:
+                        if (clas.name==j.name):
+                            continue
                     if len(j.keys()[0].enrollment)<10:
                         j.keys()[0].enrollment.append(s)
                         s.classes.append(j.keys()[0])
@@ -174,6 +177,9 @@ for i in range(1, 5):
                     s.classes.append(classEnrollment[min_row][1])
             elif (i==3):
                 for j in s.period3: #looping through classes in period by priority
+                    for clas in s.classes:
+                        if (clas.name==j.name):
+                            continue                   
                     if len(j.keys()[0].enrollment)<10:
                         j.keys()[0].enrollment.append(s)
                         s.classes.append(j.keys()[0])
@@ -213,6 +219,9 @@ for i in range(1, 5):
                     s.classes.append(classEnrollment[min_row][2])
             else:
                 for j in s.period4: #looping through classes in period by priority
+                    for clas in s.classes:
+                        if (clas.name==j.name):
+                            continue
                     if len(j.keys()[0].enrollment)<10:
                         j.keys()[0].enrollment.append(s)
                         s.classes.append(j.keys()[0])
@@ -254,5 +263,19 @@ for i in range(1, 5):
 #for str in session1Classes:
 
 #for str in session2Classes:
+print("Teacher's Schedules: ")
+
+
+for i in range(0, 7):
+    print(classEnrollment[i][0].teacher, ": ")
+    for j in range(0, 4):
+        print("Period "+(j+1)+": " + classEnrollment[i][j].name, " Enrollment: " + len(classEnrollment[i][j].enrollment)+ " students")
+
+print("Student's Schedules")
+
+for s in session1Students:
+    print("Name: " + s.name)
+    for i in range(0, 4):
+        print("Period "+ (i+1) + ": "+ s.classes[i].name + " Teacher: " + s.classes[i].teacher)
 
 
