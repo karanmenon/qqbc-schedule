@@ -34,7 +34,7 @@ classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geograph
 [ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion", "Kritika", []),ClassSections("World History", "Kritika", []),ClassSections("World History", "Kritika", [])], 
 [ClassSections("Strategy", "Vedul", []),ClassSections("Biology", "Vedul", []),ClassSections("Myth and Religion", "Vedul", []),ClassSections("Music", "Vedul", [])], 
 [ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
-
+#change if instructors for classes changes
 strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0], classEnrollment[6][0]]
 howToQB=[classEnrollment[2][0], classEnrollment[3][0]]
 
@@ -43,7 +43,7 @@ scope=['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/
 credentials= ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
 client=gspread.authorize(credentials)
 sheet=client.open('Copy of Scheduling Data')
-campers_data=pd.DataFrame.from_dict(sheet.get_worksheet(1).get_all_records())
+campers_data=pd.DataFrame.from_dict(sheet.get_worksheet(0).get_all_records())
 #instructors_data=pd.DataFrame.from_dict(sheet.get_worksheet(2).get_all_records())
 
 service=discovery.build('sheets', 'v4', credentials=credentials)
@@ -83,7 +83,7 @@ classPeriods={
     "Earth and Space":[4],
     "Music II": [4],
 }
-
+#change sexy dictionary if class order changes
 
 session1Students=[]
 session2Students=[]
@@ -141,10 +141,10 @@ for ind in campers_data.index:
 
 
 for i in range(1, 5):
-    sesh1=session1Students.copy()
+    sesh1=list(session1Students) #change session1Students to session2Students
     for s in sesh1:
         if(i==1):
-            if(s.qb_exp=="None"):
+            if(s.qb_exp=="none"):
                 how=howToQB[random.randrange(len(howToQB))]
                 how.enrollment.append(s)
                 s.classes.append(how)
