@@ -104,11 +104,29 @@ for ind in campers_data.index:
             continue
         for j in classPeriods[prefClass]:
             if(j==2):
-                p2.append({prefClass: i})
+                for x in classEnrollment:
+                    for y in range(4):
+                        classObj=None
+                        if(x[y].name==prefClass) and (y==1):
+                            classObj=x[y]
+                if(classObj!=None):
+                    p2.append({classObj: i})
             elif(j==3):
-                p3.append({prefClass: i})
+                for x in classEnrollment:
+                    for y in range(4):
+                        classObj=None
+                        if(x[y].name==prefClass) and (y==2):
+                            classObj=x[y]
+                if(classObj!=None):
+                    p3.append({classObj: i})
             elif(j==4):
-                p4.append({prefClass: i})
+                for x in classEnrollment:
+                    for y in range(4):
+                        classObj=None
+                        if(x[y].name==prefClass) and (y==3):
+                            classObj=x[y]
+                if(classObj!=None):
+                    p4.append({classObj: i})
 
     p2.sort(key=myFunc)
     p3.sort(key=myFunc)
@@ -138,15 +156,15 @@ for i in range(1, 5):
             if(i==2):
                 for j in s.period2: #looping through classes in period by priority
                     for clas in s.classes:
-                        if (clas.name==list(j.keys())[0]):
+                        if (clas.name==list(j.keys())[0].name):
                             continue
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
                         s.classes.append(list(j.keys())[0])
                         if(list(j.values())[0]>list(j.keys())[0].max_priority):
                             list(j.keys())[0].max_priority=list(j.values())[0]
-                            list(list(j.keys())[0]).highest.insert(0, s)
-                            list(list(j.keys())[0]).priorities.insert(0, list(j.values())[0])
+                            list(j.keys())[0].highest.insert(0, s)
+                            list(j.keys())[0].priorities.insert(0, list(j.values())[0])
                         sesh1=[stu for stu in sesh1 if stu!=s]
                         break
                     else:
@@ -180,7 +198,7 @@ for i in range(1, 5):
             elif (i==3):
                 for j in s.period3: #looping through classes in period by priority
                     for clas in s.classes:
-                        if (clas.name==list(j.keys())[0]):
+                        if (clas.name==list(j.keys())[0].name):
                             continue                   
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
@@ -222,7 +240,7 @@ for i in range(1, 5):
             else:
                 for j in s.period4: #looping through classes in period by priority
                     for clas in s.classes:
-                        if (clas.name==list(j.keys())[0]):
+                        if (clas.name==list(j.keys())[0].name):
                             continue
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
