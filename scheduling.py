@@ -154,10 +154,13 @@ for i in range(1, 5):
                 s.classes.append(strat)                
         else:
             if(i==2):
+                skip=False
                 for j in s.period2: #looping through classes in period by priority
                     for clas in s.classes:
                         if (clas.name==list(j.keys())[0].name):
-                            continue
+                            skip=True
+                    if (skip==True):
+                        continue                       
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
                         s.classes.append(list(j.keys())[0])
@@ -196,10 +199,13 @@ for i in range(1, 5):
                     classEnrollment[min_row][1].enrollment.append(s)
                     s.classes.append(classEnrollment[min_row][1])
             elif (i==3):
+                skip=False
                 for j in s.period3: #looping through classes in period by priority
                     for clas in s.classes:
                         if (clas.name==list(j.keys())[0].name):
-                            continue                   
+                            skip=True
+                    if (skip==True):
+                        continue                        
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
                         s.classes.append(list(j.keys())[0])
@@ -238,10 +244,13 @@ for i in range(1, 5):
                     classEnrollment[min_row][2].enrollment.append(s)
                     s.classes.append(classEnrollment[min_row][2])
             else:
+                skip=False
                 for j in s.period4: #looping through classes in period by priority
                     for clas in s.classes:
                         if (clas.name==list(j.keys())[0].name):
-                            continue
+                            skip=True
+                    if (skip==True):
+                        continue     
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
                         s.classes.append(list(j.keys())[0])
