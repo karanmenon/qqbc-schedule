@@ -156,7 +156,6 @@ for i in range(1, 5):
                 for j in s.period2: #looping through classes in period by priority
                     print(s.classes)
                     for clas in s.classes:
-                        print(clas.name, " ", list(j.keys())[0].name)
                         if (clas.name==list(j.keys())[0].name):
                             skip=True
                     if (skip==True):
