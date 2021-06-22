@@ -7,6 +7,14 @@ import random
 import copy
 from oauth2client.service_account import ServiceAccountCredentials
 
+'''
+On your terminal run the following commands for the code to run
+pip install numpy
+pip install pandas
+pip install gspread
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+'''
+
 session_num=2
 class Student:
     def __init__(self, name, session, qb_exp, period2, period3, period4):
@@ -139,7 +147,7 @@ for ind in campers_data.index:
         session2Students.append(s)
 
 for i in range(1, 5):
-    sesh1=list(session2Students) #change session1Students to session2Students
+    sesh1=list(session2Students) #change session1Students to session2Students or vice versa if applicable
     for s in sesh1:
         if(i==1):
             if(s.qb_exp=="none"):
@@ -154,7 +162,6 @@ for i in range(1, 5):
             if(i==2):
                 skip=False
                 for j in s.period2: #looping through classes in period by priority
-                    print(s.classes)
                     for clas in s.classes:
                         if (clas.name==list(j.keys())[0].name):
                             skip=True
@@ -196,7 +203,6 @@ for i in range(1, 5):
                         skip-False
                         if(len(classEnrollment[y][1].enrollment)<min_enrollment):
                             for clas in s.classes:
-                                print(clas.name, " ", classEnrollment[y][1].name)
                                 if (clas.name==classEnrollment[y][1].name):
                                     skip=True
                             if (skip==True):
@@ -249,7 +255,6 @@ for i in range(1, 5):
                         skip=False
                         if(len(classEnrollment[y][2].enrollment)<min_enrollment):
                             for clas in s.classes:
-                                print(clas.name, " ", classEnrollment[y][2].name)
                                 if (clas.name==classEnrollment[y][2].name):
                                     skip=True
                             if (skip==True):
@@ -301,7 +306,6 @@ for i in range(1, 5):
                         skip=False
                         if(len(classEnrollment[y][3].enrollment)<min_enrollment):
                             for clas in s.classes:
-                                print(clas.name, " ", classEnrollment[y][3].name)
                                 if (clas.name==classEnrollment[y][3].name):
                                     skip=True
                             if (skip==True):
@@ -325,7 +329,7 @@ for i in range(0, 7):
 
 print("Student's Schedules")
 
-for s in session2Students:
+for s in session2Students: #changes session1Students to session2Students if applicable or vice versa
     print("Name: " + s.name)
     for i in range(0, 4):
         num=str(i+1)
