@@ -7,7 +7,7 @@ import random
 import copy
 from oauth2client.service_account import ServiceAccountCredentials
 
-session_num=1
+session_num=2
 class Student:
     def __init__(self, name, session, qb_exp, period2, period3, period4):
         self.name=name
@@ -37,7 +37,6 @@ classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geograph
 #change if instructors for classes changes
 strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0], classEnrollment[6][0]]
 howToQB=[classEnrollment[2][0], classEnrollment[3][0]]
-
 
 scope=['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']        
 credentials= ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -139,9 +138,8 @@ for ind in campers_data.index:
     else:
         session2Students.append(s)
 
-
 for i in range(1, 5):
-    sesh1=list(session1Students) #change session1Students to session2Students
+    sesh1=list(session2Students) #change session1Students to session2Students
     for s in sesh1:
         if(i==1):
             if(s.qb_exp=="none"):
@@ -156,10 +154,13 @@ for i in range(1, 5):
             if(i==2):
                 skip=False
                 for j in s.period2: #looping through classes in period by priority
+                    print(s.classes)
                     for clas in s.classes:
+                        print(clas.name, " ", list(j.keys())[0].name)
                         if (clas.name==list(j.keys())[0].name):
                             skip=True
                     if (skip==True):
+                        print("continue")
                         continue                       
                     if len(list(j.keys())[0].enrollment)<10:
                         list(j.keys())[0].enrollment.append(s)
@@ -193,9 +194,16 @@ for i in range(1, 5):
                     min_enrollment=11
                     min_row=0
                     for y in range(0, 7):
+                        skip-False
                         if(len(classEnrollment[y][1].enrollment)<min_enrollment):
+                            for clas in s.classes:
+                                print(clas.name, " ", classEnrollment[y][1].name)
+                                if (clas.name==classEnrollment[y][1].name):
+                                    skip=True
+                            if (skip==True):
+                                continue
                             min_enrollment=len(classEnrollment[y][1].enrollment)
-                            min_row=y
+                            min_row=y    
                     classEnrollment[min_row][1].enrollment.append(s)
                     s.classes.append(classEnrollment[min_row][1])
             elif (i==3):
@@ -203,6 +211,7 @@ for i in range(1, 5):
                 for j in s.period3: #looping through classes in period by priority
                     for clas in s.classes:
                         if (clas.name==list(j.keys())[0].name):
+                            print(clas.name)
                             skip=True
                     if (skip==True):
                         continue                        
@@ -238,9 +247,16 @@ for i in range(1, 5):
                     min_enrollment=11
                     min_row=0
                     for y in range(0, 7):
+                        skip=False
                         if(len(classEnrollment[y][2].enrollment)<min_enrollment):
+                            for clas in s.classes:
+                                print(clas.name, " ", classEnrollment[y][2].name)
+                                if (clas.name==classEnrollment[y][2].name):
+                                    skip=True
+                            if (skip==True):
+                                continue
                             min_enrollment=len(classEnrollment[y][2].enrollment)
-                            min_row=y
+                            min_row=y   
                     classEnrollment[min_row][2].enrollment.append(s)
                     s.classes.append(classEnrollment[min_row][2])
             else:
@@ -283,9 +299,16 @@ for i in range(1, 5):
                     min_enrollment=11
                     min_row=0
                     for y in range(0, 7):
+                        skip=False
                         if(len(classEnrollment[y][3].enrollment)<min_enrollment):
+                            for clas in s.classes:
+                                print(clas.name, " ", classEnrollment[y][3].name)
+                                if (clas.name==classEnrollment[y][3].name):
+                                    skip=True
+                            if (skip==True):
+                                continue
                             min_enrollment=len(classEnrollment[y][3].enrollment)
-                            min_row=y
+                            min_row=y   
                     classEnrollment[min_row][3].enrollment.append(s)
                     s.classes.append(classEnrollment[min_row][3])
 
@@ -303,7 +326,7 @@ for i in range(0, 7):
 
 print("Student's Schedules")
 
-for s in session1Students:
+for s in session2Students:
     print("Name: " + s.name)
     for i in range(0, 4):
         num=str(i+1)
