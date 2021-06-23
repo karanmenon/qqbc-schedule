@@ -52,10 +52,10 @@ if (session_num==2):
     [ClassSections("Strategy", "Jennifer", []), ClassSections("Biology II", "Jennifer", []),"Break",ClassSections("Earth and Space", "Jennifer", [])], 
     [ClassSections("Strategy", "Kritika", []),"Break","Break", "Break"], 
     ["Break",ClassSections("Myth and Religion II", "Vedul", []),ClassSections("Myth and Religion II", "Vedul", []),ClassSections("Music II", "Vedul", [])], 
-    [ClassSections("How to QB", "Vishal", []),ClassSections("Military History", "Vishal", []), ClassSections("Monarchy", "Vishal", []), "Break"]]    
+    [ClassSections("How to QB", "Vishal", []),ClassSections("Military History", "Vishal", []), ClassSections("Monarchy", "Vishal", []), "Break"]] 
 
 #change if instructors for classes changes
-strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0]]
+strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[3][0], classEnrollment[4][0]]
 howToQB=[classEnrollment[2][0], classEnrollment[6][0]]
 
 scope=['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']        
@@ -72,8 +72,8 @@ instructors_sheet_id=1244594342
 
 session1Classes=["Myth and Religion", "Prose", "US History", "Chemistry", "Geography", "Poetry", "European History",
     "Biology", "Visual Art", "Drama", "World History", "Physics", "Music"]
-session2Classes= ["Politics", "Myth and Religion II", "Biology II", "Poetry II", "Military History",
-"Authors", "Monarchy", "Geography II", "Earth and Space", "Music II"]
+session2Classes= ["Prose II", "Politics", "Myth and Religion II", "Biology II", "Poetry II", "Military History",
+    "Philosophy and Society", "Chemistry II", "Authors", "Monarchy", "Geography II", "Earth and Space", "Music II"]
 
 classPeriods={
     "Geography": [2,3,4],
@@ -88,18 +88,21 @@ classPeriods={
     "Visual Art": [3], 
     "Drama": [4], 
     "Music": [4],
+    "Prose II":[2],
     "Politics":[3],
     "Myth and Religion II":[2,3],
     "Biology II":[2],
     "Poetry II":[3],
     "Military History":[2],
+    "Philosophy and Society":[3],
+    "Chemistry II":[3],
     "Authors":[4],
     "Monarchy":[3],
     "Geography II":[2,4],
     "Earth and Space":[4],
     "Music II": [4],
 }
-#change sexy dictionary if class order changes
+#change sexy dictionary if class order changes   
 
 session1Students=[]
 session2Students=[]
