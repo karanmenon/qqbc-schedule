@@ -35,16 +35,28 @@ class ClassSections:
         self.highest=[]
         self.priorities=[]
         self.capacity=10
-classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", [])], 
-[ClassSections("Strategy", "Andy", []),ClassSections("American History", "Andy", []),ClassSections("Prose", "Andy", []),ClassSections("American History", "Andy", [])], 
-[ClassSections("How to QB", "Jason", []),ClassSections("Poetry", "Jason", []),ClassSections("Visual Art", "Jason", []),ClassSections("Drama", "Jason", [])], 
-[ClassSections("How to QB", "Jennifer", []),ClassSections("Biology", "Jennifer", []),ClassSections("Chemistry", "Jennifer", []),ClassSections("Biology", "Jennifer", [])], 
-[ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion", "Kritika", []),ClassSections("World History", "Kritika", []),ClassSections("World History", "Kritika", [])], 
-[ClassSections("Strategy", "Vedul", []),ClassSections("Biology", "Vedul", []),ClassSections("Myth and Religion", "Vedul", []),ClassSections("Music", "Vedul", [])], 
-[ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
+classEnrollment=[]
+
+if (session_num==1):
+    classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", []),ClassSections("Geography", "Aarav", [])], 
+    [ClassSections("Strategy", "Andy", []),ClassSections("American History", "Andy", []),ClassSections("Prose", "Andy", []),ClassSections("American History", "Andy", [])], 
+    [ClassSections("How to QB", "Jason", []),ClassSections("Poetry", "Jason", []),ClassSections("Visual Art", "Jason", []),ClassSections("Drama", "Jason", [])], 
+    [ClassSections("How to QB", "Jennifer", []),ClassSections("Biology", "Jennifer", []),ClassSections("Chemistry", "Jennifer", []),ClassSections("Biology", "Jennifer", [])], 
+    [ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion", "Kritika", []),ClassSections("World History", "Kritika", []),ClassSections("World History", "Kritika", [])], 
+    [ClassSections("Strategy", "Vedul", []),ClassSections("Biology", "Vedul", []),ClassSections("Myth and Religion", "Vedul", []),ClassSections("Music", "Vedul", [])], 
+    [ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
+if (session_num==2):
+    classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography II", "Aarav", []),ClassSections("Politics", "Aarav", []), "Break"], 
+    [ClassSections("Strategy", "Andy", []),ClassSections("Prose II", "Andy", []), "Break",ClassSections("Authors", "Andy", [])], 
+    [ClassSections("How to QB", "Jason", []), "Break" ,ClassSections("Poetry II", "Jason", []),ClassSections("Geography II", "Jason", [])], 
+    ["Break", ClassSections("Biology II", "Jennifer", []),ClassSections("Chemistry II", "Jennifer", []),ClassSections("Earth and Space", "Jennifer", [])], 
+    [ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion II", "Kritika", []),ClassSections("Philosophy and Society", "Kritika", []), "Break"], 
+    [ClassSections("Strategy", "Vedul", []), "Break" ,ClassSections("Myth and Religion II", "Vedul", []),ClassSections("Music II", "Vedul", [])], 
+    [ClassSections("How to QB", "Vishal", []),ClassSections("Military History", "Vishal", []), ClassSections("Monarchy", "Vishal", []), "Break"]]    
+
 #change if instructors for classes changes
-strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0], classEnrollment[6][0]]
-howToQB=[classEnrollment[2][0], classEnrollment[3][0]]
+strategy=[classEnrollment[0][0], classEnrollment[1][0], classEnrollment[4][0], classEnrollment[5][0]]
+howToQB=[classEnrollment[2][0], classEnrollment[6][0]]
 
 scope=['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']        
 credentials= ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -114,25 +126,25 @@ for ind in campers_data.index:
                 for x in classEnrollment:
                     for y in range(4):
                         classObj=None
-                        if(x[y].name==prefClass) and (y==1):
+                        if (x[y]!="Break") and (x[y].name==prefClass) and (y==1):
                             classObj=x[y]
-                if(classObj!=None):
+                if(classObj!=None) and (classObj!="Break"):
                     p2.append({classObj: i})
             elif(j==3):
                 for x in classEnrollment:
                     for y in range(4):
                         classObj=None
-                        if(x[y].name==prefClass) and (y==2):
+                        if (x[y]!="Break") and (x[y].name==prefClass) and (y==2):
                             classObj=x[y]
-                if(classObj!=None):
+                if(classObj!=None) and (classObj!="Break"):
                     p3.append({classObj: i})
             elif(j==4):
                 for x in classEnrollment:
                     for y in range(4):
                         classObj=None
-                        if(x[y].name==prefClass) and (y==3):
+                        if(x[y]!="Break") and (x[y].name==prefClass) and (y==3):
                             classObj=x[y]
-                if(classObj!=None):
+                if(classObj!=None) and (classObj!="Break"):
                     p4.append({classObj: i})
 
     p2.sort(key=myFunc)
@@ -201,9 +213,11 @@ for i in range(1, 5):
                     min_row=0
                     for y in range(0, 7):
                         skip-False
+                        if(classEnrollment[y][1]=="Break"):
+                            continue
                         if(len(classEnrollment[y][1].enrollment)<min_enrollment):
                             for clas in s.classes:
-                                if (clas.name==classEnrollment[y][1].name):
+                                if (clas.name==classEnrollment[y][1].name) or (clas=="Break"):
                                     skip=True
                             if (skip==True):
                                 continue
@@ -253,9 +267,11 @@ for i in range(1, 5):
                     min_row=0
                     for y in range(0, 7):
                         skip=False
+                        if(classEnrollment[y][2]=="Break"):
+                            continue
                         if(len(classEnrollment[y][2].enrollment)<min_enrollment):
                             for clas in s.classes:
-                                if (clas.name==classEnrollment[y][2].name):
+                                if (clas.name==classEnrollment[y][2].name) or (clas=="Break"):
                                     skip=True
                             if (skip==True):
                                 continue
@@ -304,9 +320,11 @@ for i in range(1, 5):
                     min_row=0
                     for y in range(0, 7):
                         skip=False
+                        if(classEnrollment[y][3]=="Break"):
+                            continue
                         if(len(classEnrollment[y][3].enrollment)<min_enrollment):
                             for clas in s.classes:
-                                if (clas.name==classEnrollment[y][3].name):
+                                if (clas.name==classEnrollment[y][3].name) or (clas=="Break"):
                                     skip=True
                             if (skip==True):
                                 continue
@@ -322,10 +340,16 @@ print("Teacher's Schedules: ")
 
 
 for i in range(0, 7):
-    print(classEnrollment[i][0].teacher, ": ")
+    if(classEnrollment[i][0]=="Break"):
+        print(classEnrollment[i][1].teacher, ": ")
+    else:    
+        print(classEnrollment[i][0].teacher, ": ")
     for j in range(0, 4):
         num=str(j+1)
-        print("Period "+num+": " + classEnrollment[i][j].name + " Enrollment: " + str(len(classEnrollment[i][j].enrollment))+ " students")
+        if(classEnrollment[i][j]=="Break"):
+            print("Period "+num+": Break")
+        else: 
+            print("Period "+num+": " + classEnrollment[i][j].name + " Enrollment: " + str(len(classEnrollment[i][j].enrollment))+ " students")
 
 print("Student's Schedules")
 
