@@ -46,12 +46,12 @@ if (session_num==1):
     [ClassSections("Strategy", "Vedul", []),ClassSections("Biology", "Vedul", []),ClassSections("Myth and Religion", "Vedul", []),ClassSections("Music", "Vedul", [])], 
     [ClassSections("Strategy", "Vishal", []),ClassSections("World History", "Vishal", []),ClassSections("Euro History", "Vishal", []),ClassSections("Euro History", "Vishal", [])]]
 if (session_num==2):
-    classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography II", "Aarav", []),ClassSections("Politics", "Aarav", []), "Break"], 
-    [ClassSections("Strategy", "Andy", []),ClassSections("Prose II", "Andy", []), "Break",ClassSections("Authors", "Andy", [])], 
-    [ClassSections("How to QB", "Jason", []), "Break" ,ClassSections("Poetry II", "Jason", []),ClassSections("Geography II", "Jason", [])], 
-    ["Break", ClassSections("Biology II", "Jennifer", []),ClassSections("Chemistry II", "Jennifer", []),ClassSections("Earth and Space", "Jennifer", [])], 
-    [ClassSections("Strategy", "Kritika", []),ClassSections("Myth and Religion II", "Kritika", []),ClassSections("Philosophy and Society", "Kritika", []), "Break"], 
-    [ClassSections("Strategy", "Vedul", []), "Break" ,ClassSections("Myth and Religion II", "Vedul", []),ClassSections("Music II", "Vedul", [])], 
+    classEnrollment=[[ClassSections("Strategy", "Aarav", []),ClassSections("Geography II", "Aarav", []),"Break",ClassSections("Geography II", "Aarav", [])], 
+    [ClassSections("Strategy", "Andy", []),"Break",ClassSections("Politics", "Andy", []), ClassSections("Authors", "Andy", [])], 
+    [ClassSections("How to QB", "Jason", []), "Break" ,ClassSections("Poetry II", "Jason", []),"Break"], 
+    [ClassSections("Strategy", "Jennifer", []), ClassSections("Biology II", "Jennifer", []),"Break",ClassSections("Earth and Space", "Jennifer", [])], 
+    [ClassSections("Strategy", "Kritika", []),"Break","Break", "Break"], 
+    ["Break",ClassSections("Myth and Religion II", "Vedul", []),ClassSections("Myth and Religion II", "Vedul", []),ClassSections("Music II", "Vedul", [])], 
     [ClassSections("How to QB", "Vishal", []),ClassSections("Military History", "Vishal", []), ClassSections("Monarchy", "Vishal", []), "Break"]]    
 
 #change if instructors for classes changes
@@ -72,8 +72,8 @@ instructors_sheet_id=1244594342
 
 session1Classes=["Myth and Religion", "Prose", "US History", "Chemistry", "Geography", "Poetry", "European History",
     "Biology", "Visual Art", "Drama", "World History", "Physics", "Music"]
-session2Classes= ["Prose II", "Politics", "Myth and Religion II", "Biology II", "Poetry II", "Military History",
-    "Philosophy and Society", "Chemistry II", "Authors", "Monarchy", "Geography II", "Earth and Space", "Music II"]
+session2Classes= ["Politics", "Myth and Religion II", "Biology II", "Poetry II", "Military History",
+"Authors", "Monarchy", "Geography II", "Earth and Space", "Music II"]
 
 classPeriods={
     "Geography": [2,3,4],
@@ -88,14 +88,11 @@ classPeriods={
     "Visual Art": [3], 
     "Drama": [4], 
     "Music": [4],
-    "Prose II":[2],
     "Politics":[3],
     "Myth and Religion II":[2,3],
     "Biology II":[2],
     "Poetry II":[3],
     "Military History":[2],
-    "Philosophy and Society":[3],
-    "Chemistry II":[3],
     "Authors":[4],
     "Monarchy":[3],
     "Geography II":[2,4],
